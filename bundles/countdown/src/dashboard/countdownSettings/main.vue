@@ -1,25 +1,25 @@
 <template>
   <div v-if="loaded">
     <label for="startDate">Startdatum</label>
-    <input v-model="startDate" @change="saveChangesToReplicant" type="datetime-local">
+    <input :value="startDate" type="datetime-local" :min="minDate" @change="saveChangesToReplicant">
   </div>
 </template>
 
 <script setup lang="ts">
 import { useHead } from '@unhead/vue';
 import { ref, watch } from 'vue';
-import { parseISOLocal } from "../../browser_shared/util";
 import type { CountdownSettings } from '../../types';
 
 const loaded = ref(false);
 
-// @ts-ignore
-const startDate = ref<Date>()
+const minDate = new Date().toISOString().slice(0, 16);
+
+const startDate = ref<string>()
 useHead({ title: 'Countdown Settings' }); // set the title of this page
 
 function updateFromReplicants() {
   // @ts-ignore
-  startDate.value = parseISOLocal(countdownSettings.value.startDate).toISOString().slice(0, 16);
+  startDate.value = countdownSettings.value.startDate;
 
   if (!loaded.value) {
     loaded.value = true;
@@ -37,9 +37,10 @@ NodeCG.waitForReplicants(countdownSettings).then(() => {
   countdownSettings.on('change', updateFromReplicants);
 });
 
-function saveChangesToReplicant() {
+function saveChangesToReplicant(event: Event) {
   // @ts-ignore
-  countdownSettings.value.startDate = parseISOLocal(startDate.value).toISOString()
+  countdownSettings.value.startDate = (event.target as HTMLInputElement).value;
+  startDate.value = countdownSettings.value?.startDate;
 }
 
 </script>

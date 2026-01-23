@@ -66,8 +66,6 @@ function updateFromReplicants() {
   // @ts-ignore
   dateTime.value = parseISOLocal(countdownSettings.value.startDate);
 
-  console.log(dateTime.value)
-
   if (!loaded.value) {
     loaded.value = true;
   }
