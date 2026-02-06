@@ -9,6 +9,15 @@ export default async (nodecg: NodeCGServerAPI) => {
     try {
       const response = await axios.get(nodecg.bundleConfig.scheduleUrl ??  `http://localhost:4001/data/rundowns/current`);
       nodecg.sendMessage('schedule', response.data);
-    } catch (e) {}
+    } catch (e) {
+      console.error(e)
+    }
+
+    try {
+      const response = await axios.get(nodecg.bundleConfig.scheduleUrl ??  `http://localhost:4001/api/poll`);
+      nodecg.sendMessage('event', response.data);
+    } catch (e) {
+      console.error(e)
+    }
   }, 2000);
 };
