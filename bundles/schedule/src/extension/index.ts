@@ -15,7 +15,7 @@ export default async (nodecg: NodeCGServerAPI) => {
     }
 
     try {
-      const response = await axios.get(new URL('api/poll', baseUrl));
+      const response = await axios.get(new URL('api/poll', baseUrl).toString());
       nodecg.sendMessage('event', response.data);
     } catch (e) {
       console.error(e)
