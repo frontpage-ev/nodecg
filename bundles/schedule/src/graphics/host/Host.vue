@@ -6,8 +6,8 @@
       'font-size': fontSize,
       color: fontColor,
       'font-weight': fontWeight,
-      'text-align': align,
-      'line-height': '.75em',
+      'text-align': fontAlign,
+      'line-height': lineHeight,
     }"
   >
     {{ text }}
@@ -21,7 +21,8 @@ const text = ref<string|null>();
 const fontSize = ref('16px');
 const fontColor = ref('white');
 const fontWeight = ref('400');
-const align = ref('start');
+const fontAlign = ref('start');
+const lineHeight = ref('.75em')
 
 interface EventData {
   title: string
@@ -49,7 +50,8 @@ const attribute = searchParams.get('attribute') as string
 fontSize.value = searchParams.get('size') as string ?? '16px'
 fontColor.value = searchParams.get('color') as string ?? 'white'
 fontWeight.value = searchParams.get('weight') as string ?? '400'
-align.value = searchParams.get('align') as string ?? 'start'
+fontAlign.value = searchParams.get('align') as string ?? 'start'
+lineHeight.value = searchParams.get('line') as string ?? '.75em'
 
 nodecg.listenFor('event', async ({payload}: {payload: { eventNow: EventData }}) => {
   // @ts-expect-error should be dynamic
