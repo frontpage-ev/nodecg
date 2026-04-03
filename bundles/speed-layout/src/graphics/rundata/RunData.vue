@@ -1,4 +1,5 @@
 <template>
+  <!-- @vue-ignore -->
   <p
     v-if="loaded"
     class="font-inter"
@@ -6,7 +7,8 @@
       'font-size': fontSize,
       color: fontColor,
       'font-weight': fontWeight,
-      'line-height': '.75em',
+      'text-align': fontAlign,
+      'line-height': lineHeight,
     }"
   >
     {{ text }}
@@ -23,6 +25,8 @@ const text = ref<string|null>();
 const fontSize = ref('16px');
 const fontColor = ref('white');
 const fontWeight = ref('400');
+const fontAlign = ref('start');
+const lineHeight = ref('.75em')
 
 const searchParams = new URLSearchParams(window.location.search)
 const attribute = searchParams.get('attribute') as string
@@ -30,6 +34,8 @@ const attribute = searchParams.get('attribute') as string
 fontSize.value = searchParams.get('size') as string ?? '16px'
 fontColor.value = searchParams.get('color') as string ?? 'white'
 fontWeight.value = searchParams.get('weight') as string ?? '400'
+fontAlign.value = searchParams.get('align') as string ?? 'start'
+lineHeight.value = searchParams.get('line') as string ?? '.75em'
 
 const runDataActiveRun = nodecg.Replicant<RunData>('runDataActiveRun', 'nodecg-speedcontrol');
 
